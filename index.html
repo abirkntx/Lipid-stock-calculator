@@ -84,7 +84,6 @@
       <label for="goalEthanol">Goal ethanol weight (g)</label>
       <input id="goalEthanol" type="number" step="any" readonly />
       <div class="note">
-        Formula: (lipid weight ÷ goal concentration) × 789
       </div>
     </div>
 
@@ -97,7 +96,6 @@
       <label for="actualConc">Actual lipid concentration (mg/mL)</label>
       <input id="actualConc" type="number" step="any" readonly />
       <div class="note">
-        Formula: (lipid weight ÷ ethanol weight) ÷ 789
       </div>
     </div>
 
@@ -128,7 +126,7 @@
 
       // Actual lipid concentration = (lipid weight / ethanol weight) / 789
       if (!isNaN(lipid) && !isNaN(actualEth) && actualEth !== 0) {
-        actualConc = (lipid / actualEth) / 789;
+        actualConc = 1000* (lipid / actualEth) / 0.789;
         actualConc = Number.isFinite(actualConc) ? actualConc.toFixed(4) : "";
       }
 
