@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lipid Stock Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 12px;
+      background: #f5f5f5;
+    }
+    .wrapper {
+      max-width: 340px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0 0 12px;
+      text-align: center;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+    label {
+      font-size: 13px;
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+    input[type="number"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #d0d0d0;
+      font-size: 13px;
+    }
+    input[readonly] {
+      background: #f0f0f0;
+    }
+    .note {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
+    }
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 8px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background: #0078d4;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Lipid stock calculator</h1>
+
+    <!-- User Inputs -->
+    <div class="field">
+      <label for="lipidWeight">Lipid weight (g)</label>
+      <input id="lipidWeight" type="number" step="any" />
+    </div>
+
+    <div class="field">
+      <label for="goalConc">Goal concentration (mg/mL)</label>
+      <input id="goalConc" type="number" step="any" />
+    </div>
+
+    <!-- Goal Ethanol Weight -->
+    <div class="field">
+      <label for="goalEthanol">Goal ethanol weight (g)</label>
+      <input id="goalEthanol" type="number" step="any" readonly />
+      <div class="note">
+        Formula: ((lipid weight × 1000) ÷ goal conc) × 0.789
+      </div>
+    </div>
+
+    <!-- Actual Ethanol Weight -->
+    <div class="field">
+      <label for="actualEthanol">Actual ethanol weight (g)</label>
+      <input id="actualEthanol" type="number" step="any" />
+    </div>
+
+    <!-- Actual Concentration -->
+    <div class="field">
+      <label for="actualConc">Actual concentration (mg/mL)</label>
+      <input id="actualConc" type="number" step="any" readonly />
+      <div class="note">
+        Formula: (lipid weight × 1000) ÷ (actual ethanol weight/0.789)
+      </div>
+    </div>
+
+    <button id="resetBtn">Reset</button>
+  </div>
+
+  <script>
+    const lipidInput = document.getElementById("lipidWeight");
+    const goalConcInput = document.getElementById("goalConc");
+    const goalEthInput = document.getElementById("goalEthanol");
+    const actualEthInput = document.getElementById("actualEthanol");
+    const actualConcInput = document.getElementById("actualConc");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function recalc() {
+      const lipid = parseFloat(lipidInput.value);          // g
+      const goalConc = parseFloat(goalConcInput.value);    // mg/mL
+      const actualEth = parseFloat(actualEthInput.value);  // g
+
+      let goalEthanol = "";
+      let actualConc = "";
+
+      // Goal ethanol weight = ((lipid weight * 1000) / goal concentration) * 0.789
+      if (!isNaN(lipid) && !isNaN(goalConc) && goalConc !== 0) {
+        goalEthanol = ((lipid * 1000) / goalConc) * 0.789;
+        goalEthanol = Number.isFinite(goalEthanol) ? goalEthanol.toFixed(4) : "";
+      }
+
+      // Actual concentration = (lipid weight * 1000) / (actual ethanol weight / 0.789)
+      if (!isNaN(lipid) && !isNaN(actualEth) && actualEth !== 0) {
+        actualConc = (lipid * 1000) / (actualEth / 0.789);
+        actualConc = Number.isFinite(actualConc) ? actualConc.toFixed(4) : "";
+      }
+
+      goalEthInput.value = goalEthanol;
+      actualConcInput.value = actualConc;
+    }
+
+    lipidInput.addEventListener("input", recalc);
+    goalConcInput.addEventListener("input", recalc);
+    actualEthInput.addEventListener("input", recalc);
+
+    resetBtn.addEventListener("click", () => {
+      lipidInput.value = "";
+      goalConcInput.value = "";
+      goalEthInput.value = "";
+      actualEthInput.value = "";
+      actualConcInput.value = "";
+    });
+  </script>
+</body>
+</html>
