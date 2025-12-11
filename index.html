@@ -120,7 +120,7 @@
 
       // Goal ethanol weight = (lipid weight / goal concentration) * 789
       if (!isNaN(lipid) && !isNaN(goalConc) && goalConc !== 0) {
-        goalEthanol = (lipid / goalConc) * 78.9;
+        goalEthanol = (lipid / goalConc) * 0.789;
         goalEthanol = Number.isFinite(goalEthanol) ? goalEthanol.toFixed(4) : "";
       }
 
