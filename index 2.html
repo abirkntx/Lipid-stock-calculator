@@ -132,7 +132,7 @@
 
       // Actual concentration = (lipid weight * 1000) / (actual ethanol weight / 0.789)
       if (!isNaN(lipid) && !isNaN(actualEth) && actualEth !== 0) {
-        actualConc = (lipid) / (actualEth / 0.789);
+        actualConc = lipid / (actualEth / 0.789);
         actualConc = Number.isFinite(actualConc) ? actualConc.toFixed(4) : "";
       }
 
