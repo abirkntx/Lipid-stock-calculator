@@ -71,7 +71,7 @@
     <h1>Lipid Stock Calculator</h1>
 
     <div class="field">
-      <label for="lipidWeight">Lipid weight (g)</label>
+      <label for="lipidWeight">Lipid weight (mg)</label>
       <input id="lipidWeight" type="number" step="any" />
     </div>
 
@@ -120,7 +120,7 @@
 
       // Goal ethanol weight = (lipid weight / goal concentration) * 789
       if (!isNaN(lipid) && !isNaN(goalConc) && goalConc !== 0) {
-        goalEthanol = 100*(lipid / goalConc) * 0.789;
+        goalEthanol = 10*(lipid / goalConc) * 0.789;
         goalEthanol = Number.isFinite(goalEthanol) ? goalEthanol.toFixed(4) : "";
       }
 
