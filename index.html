@@ -118,15 +118,15 @@
       let goalEthanol = "";
       let actualConc = "";
 
-      // Goal ethanol weight = (lipid weight / goal concentration) * 789
+      // Goal ethanol weight = (lipid weight / goal concentration)
       if (!isNaN(lipid) && !isNaN(goalConc) && goalConc !== 0) {
-        goalEthanol = 10*(lipid / goalConc) * 0.789;
+        goalEthanol = (lipid / goalConc) * 0.789;
         goalEthanol = Number.isFinite(goalEthanol) ? goalEthanol.toFixed(4) : "";
       }
 
       // Actual lipid concentration = (lipid weight / ethanol weight) / 789
       if (!isNaN(lipid) && !isNaN(actualEth) && actualEth !== 0) {
-        actualConc = 10* (lipid / actualEth) / 0.789;
+        actualConc = 10* (lipid / actualEth) * 0.789;
         actualConc = Number.isFinite(actualConc) ? actualConc.toFixed(4) : "";
       }
 
